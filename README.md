@@ -1,3 +1,3 @@
-# After Effects Snippets
+# After Effects Sripts
 
-Here are some more or less useful After Effects scripts.
+My collection of Adobe After Effects scripts.
