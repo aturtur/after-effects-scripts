@@ -14,8 +14,9 @@ for (var i = 1; i <= masksGroup.numProperties; i++)
     shapeGroup.addProperty("ADBE Vector Shape - Group").name = mask.name;
 }
 
-shapeLayer.property("ADBE Root Vectors Group").addProperty("ADBE Vector Graphic - Fill")
-shapeLayer.property("ADBE Root Vectors Group").property("ADBE Vector Graphic - Fill").property("ADBE Vector Fill Color").setValue([1,1,1]);
+shapeLayer.property("ADBE Root Vectors Group").addProperty("ADBE Vector Graphic - Fill");
+var shapeFill = shapeLayer.property("ADBE Root Vectors Group").property("ADBE Vector Graphic - Fill");
+shapeFill.property("ADBE Vector Fill Color").setValue([1,1,1]);
 shapeLayer.name =  "Shape "+masksLayer.name;
 
 app.endUndoGroup();
