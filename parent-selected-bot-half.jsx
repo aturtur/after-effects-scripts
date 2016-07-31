@@ -9,7 +9,6 @@ for (var i = 0; i < layers; i++) {
 	if (i >= (split)) {
         curLayer = comp.selectedLayers[i];
         curLayer.parent = comp.layer(curLayer.index-split);
-    } else {
     }
 }
 app.endUndoGroup();	
