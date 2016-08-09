@@ -8,6 +8,7 @@ for (var i = 0; i < comp.selectedLayers.length; i++) {
     var duplicateLayer = layer.duplicate();
 
     duplicateLayer.scale.setValue([100,100]);
+    var oldParent = layer.parent;
     layer.parent = duplicateLayer;
 
     // get data
@@ -82,5 +83,6 @@ for (var i = 0; i < comp.selectedLayers.length; i++) {
     layer.position.setValue([cPosX+moveX, cPosY+moveY, cPosZ]);
 
     duplicateLayer.remove();
+    layer.parent = oldParent;
 }
 app.endUndoGroup();
