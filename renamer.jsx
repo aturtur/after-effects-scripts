@@ -1,16 +1,17 @@
 // renamer script
 // -----------------------
-var k = 1; // [ selection ]
+var k = 4; // [ selection ]
 // k0 = active comp
 // k1 = selected layers
 // k2 = project panel items
 // k3 = selected project items
-var n = 0; // [ method ]
+// k4 = selected properties
+var n = 2; // [ method ]
 // n0 = search and replace
 // n1 = add prefix
 // n2 = add suffix
 // -----------------------
-var search = "Komppi";
+var search = "Shape";
 var replace = "Okei";
 var add = "_";
 // -----------------------
@@ -92,5 +93,22 @@ switch(k) {
             items[j].name = res;
         }
         break;
-}
+    case 4: // selected properties
+        var props = app.project.activeItem.selectedProperties;
+        for(var i = 0; i < props.length; i++) {
+                src = props[i].name;
+                switch(n) {
+                    case 0: // search and replace
+                        res = src.replace(search,replace);
+                        break;
+                    case 1: // add prefix
+                        res = add+src;
+                        break;
+                    case 2: // add suffix
+                        res = src+add;
+                        break;
+                }
+                props[i].name = res;
+        }
+        break;}
 app.endUndoGroup();

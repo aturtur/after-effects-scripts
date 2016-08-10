@@ -15,3 +15,5 @@ for (var i = 0; i < selection.length; i++) {
     yRnd = Math.random() * (yMax - yMin) + yMin;
     selection[i].position.setValue([xRnd,yRnd]);
 }
+
+app.endUndoGroup();

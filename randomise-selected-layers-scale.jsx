@@ -10,3 +10,5 @@ for (var i = 0; i < selection.length; i++) {
     rnd = Math.random() * (max - min) + min;
     selection[i].scale.setValue([rnd,rnd]);
 }
+
+app.endUndoGroup();
