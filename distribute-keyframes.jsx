@@ -1,3 +1,4 @@
+/* resource string for ui */
 var resourceString =
 "group{orientation:'column',\
     panel: Panel{text:'Options',\
@@ -20,6 +21,7 @@ var resourceString =
     },\
     okButton: Button{text:'Distribute', size:[145,30]}\}";
 
+/* user interface function */
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -35,25 +37,29 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
+/* create ui */
 var UI = createUserInterface(this, resourceString,"Distribute keyframes");
-    UI.panel.engineGroup.engine.onChange = function() {
-        if (UI.panel.engineGroup.engine.selection != 0) {
-            UI.panel.intervalGroup.intervalText.enabled = false;
-            var interval = 0;
-        } else {
-            UI.panel.intervalGroup.intervalText.enabled = true;
-            var interval = UI.panel.intervalGroup.intervalText.text;
-        }
+    
+/* dropdownlist is changed */
+UI.panel.engineGroup.engine.onChange = function() {
+    if (UI.panel.engineGroup.engine.selection != 0) {
+        UI.panel.intervalGroup.intervalText.enabled = false;
+        var interval = 0;
+    } else {
+        UI.panel.intervalGroup.intervalText.enabled = true;
+        var interval = UI.panel.intervalGroup.intervalText.text;
     }
+}
 
-    UI.okButton.onClick = function() {
+/* button is clicked */
+UI.okButton.onClick = function() {
     // nice variables
     var comp = app.project.activeItem;
     var frameRate = 1 / comp.frameDuration;
     var workAreaIn = comp.workAreaStart;
     var workAreaOut = workAreaIn + comp.workAreaDuration;
-    var method;
-    var n;    
+    var method; var n;
+    var interval = UI.panel.intervalGroup.intervalText.text;
     var twod = PropertyValueType.TwoD_SPATIAL;
     var threed = PropertyValueType.ThreeD_SPATIAL;
     var keysCount;
@@ -77,6 +83,7 @@ var UI = createUserInterface(this, resourceString,"Distribute keyframes");
     var ksab    = [ ];
     var ksc     = [ ];
     
+
     if (UI.panel.engineGroup.engine.selection == 0) {
         n = 1;
     } else if (UI.panel.engineGroup.engine.selection == 1) {
@@ -126,6 +133,7 @@ var UI = createUserInterface(this, resourceString,"Distribute keyframes");
             // distribute keyframes by manually given interval
             case 1:
                 for (var s = 1; s <= keysCount; s++){
+
                     method = firstKey + (interval/frameRate) * (s-1);
                     prop[i].setValueAtTime(method, kv[s-1]);
                     prop[i].setTemporalEaseAtKey(s, kite[s-1], kote[s-1]);
