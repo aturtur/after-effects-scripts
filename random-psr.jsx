@@ -58,8 +58,6 @@ var UI = createUserInterface(this, resourceString,"Randomise PSR");
 
 UI.okButton.onClick = function() {
 
-    app.beginUndoGroup("Randomiser");
-
     var comp = app.project.activeItem;
     var selection = comp.selectedLayers;
     var time = comp.time;
@@ -104,6 +102,7 @@ UI.okButton.onClick = function() {
         yMax = comp.width;
     }
 
+    app.beginUndoGroup("Randomiser");
     // position
     if (position == true) {
         for (var i = 0; i < selection.length; i++) {
