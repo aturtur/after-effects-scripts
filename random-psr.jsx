@@ -39,6 +39,8 @@ var resourceString =
         },\
     okButton: Button{text:'Randomise'}\}";
 
+var UI = createUserInterface(this, resourceString,"Randomise PSR");
+
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -53,8 +55,6 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     }
     return UI;
 };
-
-var UI = createUserInterface(this, resourceString,"Randomise PSR");
 
 UI.okButton.onClick = function() {
 
@@ -72,13 +72,14 @@ UI.okButton.onClick = function() {
     var yMax = UI.tabs.subtab1.pg2.yMaxText.text;
 
     var sMin = UI.tabs.subtab2.sg.sMinText.text;
-    var sMax = UI.tabs.subtab2.sg.sMaxText.text;
-    
+    var sMax = UI.tabs.subtab2.sg.sMaxText.text;    
 
     var rMin = UI.tabs.subtab3.rg.rMinText.text;
     var rMax = UI.tabs.subtab3.rg.rMaxText.text;
 
-    var xRnd; var yRnd; var rnd;
+    var xRnd;
+    var yRnd;
+    var rnd;
 
     if (xMin == "width") {
         xMin = comp.width;
@@ -102,10 +103,12 @@ UI.okButton.onClick = function() {
         yMax = comp.width;
     }
 
-    app.beginUndoGroup("Randomiser");
+    app.beginUndoGroup("random-psr");
+
     // position
     if (position == true) {
         for (var i = 0; i < selection.length; i++) {
+            
             xRnd = Math.random() * (xMax - xMin) + xMin;
             yRnd = Math.random() * (yMax - yMin) + yMin;
 
@@ -119,6 +122,7 @@ UI.okButton.onClick = function() {
     // scale
     if (scale == true) {
         for (var i = 0; i < selection.length; i++) {
+
             rnd = Math.random() * (sMax - sMin) + sMin;
             
             if (selection[i].scale.numKeys == 0) {
@@ -131,6 +135,7 @@ UI.okButton.onClick = function() {
     // rotation
     if (rotation == true) {
         for (var i = 0; i < selection.length; i++) {
+
             rnd = Math.random() * (rMax - rMin) + rMin;
             
             if (selection[i].rotation.numKeys == 0) {
