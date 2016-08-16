@@ -1,10 +1,8 @@
 app.beginUndoGroup("add folders");
 
-// basic variables
+// folders
 var comps = app.project.items.addFolder("_COMPS");
 var outputs = app.project.items.addFolder("Outputs");
-
-// folders
 var audio = app.project.items.addFolder("Audio");
 var sourcefootage = app.project.items.addFolder("Source footage");
 var versions = app.project.items.addFolder("Versions");
