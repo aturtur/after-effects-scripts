@@ -1,5 +1,7 @@
-var comp = app.project.activeItem;
+app.beginUndoGroup("pixelate");
 
+// basic variables
+var comp = app.project.activeItem;
 var width = comp.width;
 var height = comp.height;
 var pa = comp.pixelAspect;
@@ -21,3 +23,5 @@ pixelate.property("ADBE Effect Parade").property("ADBE Mosaic").property("ADBE M
 pixelate.property("ADBE Effect Parade").property("ADBE Mosaic").property("ADBE Mosaic-0002").expression = "thisComp.height/effect('Pixel Size')('Slider')";
 pixelate.property("ADBE Effect Parade").property("ADBE Mosaic").property("ADBE Mosaic-0003").setValue(1);
 pixelate.property("ADBE Effect Parade").property("ADBE Posterize").property("ADBE Posterize-0001").setValue(32);
+
+app.endUndoGroup();
