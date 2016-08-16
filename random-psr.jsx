@@ -1,3 +1,4 @@
+// ui resource string
 var resourceString =
 "group{orientation:'column',\
         checkGroup: Group{orientation:'row',\
@@ -41,8 +42,7 @@ var resourceString =
         },\
     okButton: Button{text:'Randomise'}\}";
 
-var UI = createUserInterface(this, resourceString,"Randomise PSR");
-
+// ui function
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -58,6 +58,8 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
+var UI = createUserInterface(this, resourceString,"Randomise PSR");
+
 //
 UI.tabs.subtab1.pg1.xBox.onClick = function() {
     if (UI.tabs.subtab1.pg1.xBox.value == 0) {
@@ -68,6 +70,8 @@ UI.tabs.subtab1.pg1.xBox.onClick = function() {
         UI.tabs.subtab1.pg1.xMaxText.enabled = true;
     }
 }
+
+//
 UI.tabs.subtab1.pg2.yBox.onClick = function() {
     if (UI.tabs.subtab1.pg2.yBox.value == 0) {
         UI.tabs.subtab1.pg2.yMinText.enabled = false;
@@ -112,7 +116,7 @@ UI.okButton.onClick = function() {
     // position
     if (position == true) {
         for (var i = 0; i < selection.length; i++) {
-            // --------------------------------------------
+
             // position input extras
             // x
             if (xMin == "width") {
@@ -147,19 +151,21 @@ UI.okButton.onClick = function() {
                 yMax = selection[i].position.value[1];
             }
 
-            // --------------------------------------------
+            // if x checkbox is checked
             if (xBox) {                
                 xRnd = Math.random() * (xMax - xMin) + xMin;
             } else {
                 xRnd = selection[i].position.value[0];
             }
-
+            
+            // if y checkbox is checked
             if (yBox) {                
                 yRnd = Math.random() * (yMax - yMin) + yMin;
             } else {
                 yRnd = selection[i].position.value[1];
             }
-            // --------------------------------------------
+            
+            // if there are keyframes
             if (selection[i].position.numKeys == 0) {
                 selection[i].position.setValue([xRnd,yRnd]);
             } else {

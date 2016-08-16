@@ -1,4 +1,4 @@
-app.beginUndoGroup("Rotate composition");
+app.beginUndoGroup("rotate composition");
 
 var comp = app.project.activeItem;
 var layer = app.project.activeItem.selectedLayers[0];

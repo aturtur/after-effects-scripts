@@ -1,4 +1,4 @@
-app.beginUndoGroup("Tracked nulls to lights");
+app.beginUndoGroup("tracked nulls to lights");
 
 var comp = app.project.activeItem;
 var layers = comp.selectedLayers;

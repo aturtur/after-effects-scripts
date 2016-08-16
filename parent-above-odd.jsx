@@ -1,4 +1,4 @@
-app.beginUndoGroup("Parent above odd");
+app.beginUndoGroup("parent above odd");
 
 var comp = app.project.activeItem;
 var k = 1;

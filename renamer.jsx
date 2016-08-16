@@ -1,3 +1,7 @@
+var k = 0;
+var n = 0;
+
+// ui resource string
 var resourceString = "group{orientation:'column',\
     panel: Panel{text:'Options',\
         selGroup: Group{orientation:'row',\
@@ -35,11 +39,7 @@ var resourceString = "group{orientation:'column',\
     },\
     okButton: Button{text:'Do It', size:[145,30]}\}";
 
-//
-var UI = createUserInterface(this, resourceString,"Renamer");
-var k=0;
-var n=0;
-//
+// ui function
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -55,7 +55,10 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
-//
+// create ui
+var UI = createUserInterface(this, resourceString,"Renamer");
+
+// when dropdownlist is changed
 UI.panel.selGroup.sel.onChange = function() {
     if (UI.panel.selGroup.sel.selection == 0) {
         k = 0;
@@ -70,6 +73,7 @@ UI.panel.selGroup.sel.onChange = function() {
     }
 }
 
+// when dropdownlist is changed
 UI.panel.metGroup.met.onChange = function() {
     if (UI.panel.metGroup.met.selection == 0) {
         n = 0;
@@ -80,16 +84,16 @@ UI.panel.metGroup.met.onChange = function() {
     }
 }
 
-//
+// when button is clicked
 UI.okButton.onClick = function() {
-    app.beginUndoGroup("Renamer");
-    // -----------------------
+    app.beginUndoGroup("renamer");
+
     var search = UI.panel.searchGroup.searchText.text;
     var replace = UI.panel.replaceGroup.replaceText.text;
     var add = UI.panel.addGroup.addText.text;
-    // -----------------------
     var items = new Array();
     var res; var src;
+
     switch(k) {
         case 0: // active comp
             for(var i = 1; i <= app.project.activeItem.layers.length; i++) {

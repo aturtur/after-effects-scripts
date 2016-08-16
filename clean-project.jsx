@@ -1,22 +1,7 @@
-// clean project script
+// variables
+var items = new Array();
 var filename;
 var fileformat
-
-var audios = ['.aac','.m4a','.aif','.aiff','.mp3','.wav','.wma','.mpa'];
-var videos = ['.gif','.swf','.flv','.avi','.mpeg','.mov','.mp4','.wmv','.vob','.m4v','.flm','.webm','.f4v','.mpv'];
-var images = ['.psd','.dpx','.cin','.jpg','.jpeg','.pxr','.bmp','.gdr','.png','.tiff','.tif','.tga','.exr','.pct','.pcx','.pbm','.raw','.nef','.cr2','.dng','.raf','.rpf','.rla','.jpe','.crw','.raf','.hdr'];
-var vectors = ['.ai','.eps','.pdf'];        
-var d3 = ['.obj','.c4d'];
-              
-var items = new Array();
-app.beginUndoGroup("clean");
-// -------------------------------------------------------------------------------------------------------------
-// collect items to array
-for(var i = 1; i <= app.project.numItems; i++) {
-    items[items.length] = app.project.item(i);
-}
-// -------------------------------------------------------------------------------------------------------------
-// make variables
 var make_comps = 0;
 var make_videos = 0;
 var make_images = 0;
@@ -26,9 +11,22 @@ var make_solids = 0;
 var make_vectors = 0;
 var make_oldfolders = 0;
 var make_3d = 0;
-// -------------------------------------------------------------------------------------------------------------
-//  Check if there are that kind of items
-// -------------------------------------------------------------------------------------------------------------
+
+// file formats
+var audios = ['.aac','.m4a','.aif','.aiff','.mp3','.wav','.wma','.mpa'];
+var videos = ['.gif','.swf','.flv','.avi','.mpeg','.mov','.mp4','.wmv','.vob','.m4v','.flm','.webm','.f4v','.mpv'];
+var images = ['.psd','.dpx','.cin','.jpg','.jpeg','.pxr','.bmp','.gdr','.png','.tiff','.tif','.tga','.exr','.pct','.pcx','.pbm','.raw','.nef','.cr2','.dng','.raf','.rpf','.rla','.jpe','.crw','.raf','.hdr'];
+var vectors = ['.ai','.eps','.pdf'];        
+var d3 = ['.obj','.c4d'];
+              
+app.beginUndoGroup("clean project");
+
+// collect items to array
+for(var i = 1; i <= app.project.numItems; i++) {
+    items[items.length] = app.project.item(i);
+}
+
+//  check if there are that kind of items
 for (var j = 0; j < items.length; j++) {
     if (items[j].file) {
         filename = items[j].file.name;
@@ -82,10 +80,8 @@ for (var j = 0; j < items.length; j++) {
         make_missing = 1;
     }
 }
-// -------------------------------------------------------------------------------------------------------------
-// Make folders if necessary
-// -------------------------------------------------------------------------------------------------------------
-// new folders
+
+// make folders if necessary
 if (make_comps) {
     var folder_comps = app.project.items.addFolder("_Comps");
     folder_comps.label = 0;
@@ -122,14 +118,13 @@ if (make_3d) {
     var folder_3d = app.project.items.addFolder("3D Files");
     folder_3d.label = 0;
 }
-// -------------------------------------------------------------------------------------------------------------
-// Sort items to new folders
-// -------------------------------------------------------------------------------------------------------------
+
+// sort items to new folders
 for (var j = 0; j < items.length; j++) {
     if (items[j].file) {
         filename = items[j].file.name;
         fileformat = filename.substring(filename.lastIndexOf("."));
-        // -------------------------------------------------------------------
+
         // if audio format found
         for (var k = 0; k < audios.length; k++) {
             if (audios[k] === fileformat) {

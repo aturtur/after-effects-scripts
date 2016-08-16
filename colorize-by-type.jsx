@@ -1,9 +1,9 @@
-app.beginUndoGroup("Colorize by type");
+app.beginUndoGroup("colorize by type");
 
 var comp = app.project.activeItem;
 var layers = comp.layers.length;
 
-// color codes
+// label colors
 var none     = 0;
 var red      = 1;
 var yellow   = 2;
@@ -32,6 +32,7 @@ var solidlayer      = red;
 var adjustmentlayer = seafoam;
 var nulllayer       = none;
 
+// do it
 for (var i = 1; i <= layers; i++) {
     if (comp.layer(i) instanceof AVLayer) {
         comp.layer(i).label = avlayer;

@@ -1,9 +1,9 @@
-app.beginUndoGroup("Colorize layers");
+app.beginUndoGroup("colorize layers");
 
 var comp = app.project.activeItem;
 var layersSelected = comp.selectedLayers;
 
-// color codes
+// label colors
 var none     = 0;
 var red      = 1;
 var yellow   = 2;

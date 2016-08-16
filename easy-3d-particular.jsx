@@ -1,8 +1,11 @@
+// basic variables
 var comp = app.project.activeItem;
 var cW = comp.width;
 var cH = comp.height;
 var w = comp.width / 2;
 var h = comp.height / 2;
+
+app.beginUndoGroup("easy 3d particular");
 
 // create ground grid layer
 var gridLayer = comp.layers.addSolid([0,0,0], "Easy_Grid", cW, cH, 1);
@@ -46,3 +49,5 @@ particular.property("ADBE Effect Parade").property("tc Particular").property("tc
 particular.property("ADBE Effect Parade").property("tc Particular").property("tc Particular-0111").expression = "thisComp.layer(\"Controller\").transform.yRotation";
 particular.property("ADBE Effect Parade").property("tc Particular").property("tc Particular-0076").expression = "thisComp.layer(\"Controller\").transform.zRotation";
 particular.property("ADBE Effect Parade").property("tc Particular").property("tc Particular-0113").setValue(2);
+
+app.endUndoGroup();

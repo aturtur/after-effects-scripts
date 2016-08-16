@@ -1,5 +1,6 @@
 var interval;
-//
+
+// ui resource string
 var resourceString = "group{orientation:'column',\
     panel: Panel{text:'Options',\
         engineGroup: Group{orientation:'row',\
@@ -21,10 +22,7 @@ var resourceString = "group{orientation:'column',\
     },\
     okButton: Button{text:'Distribute', size:[145,30]}\}";
 
-//
-var UI = createUserInterface(this, resourceString,"Distribute keyframes");
-
-//
+// ui function
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -40,7 +38,10 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
-//
+// create ui
+var UI = createUserInterface(this, resourceString,"Distribute keyframes");
+
+// when dropdownlist is changed
 UI.panel.engineGroup.engine.onChange = function() {
     if (UI.panel.engineGroup.engine.selection != 0) {
         UI.panel.intervalGroup.intervalText.enabled = false;
@@ -51,9 +52,9 @@ UI.panel.engineGroup.engine.onChange = function() {
     }
 }
 
-//
+// when button is clicked
 UI.okButton.onClick = function() {
-    // nice variables
+    // basic variables
     var comp = app.project.activeItem;
     var frameRate = 1 / comp.frameDuration;
     var workAreaIn = comp.workAreaStart;
@@ -85,6 +86,7 @@ UI.okButton.onClick = function() {
     var ksab    = [ ];
     var ksc     = [ ];
     
+    // choose the engine
     if (UI.panel.engineGroup.engine.selection == 0) {
         n = 1;
     } else if (UI.panel.engineGroup.engine.selection == 1) {
@@ -97,7 +99,7 @@ UI.okButton.onClick = function() {
         n = 5;
     }
 
-    app.beginUndoGroup("Distribute keyframes");
+    app.beginUndoGroup("distribute keyframes");
     // per property
     for (var i = 0; i < prop.length; i++) {
        
@@ -217,6 +219,7 @@ UI.okButton.onClick = function() {
                 break;
         }
 
+        // reset arrays
         kv      = [ ];
         kite    = [ ];
         kote    = [ ];

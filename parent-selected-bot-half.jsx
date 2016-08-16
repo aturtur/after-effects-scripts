@@ -1,4 +1,4 @@
-app.beginUndoGroup("Parent selected bot half");
+app.beginUndoGroup("parent selected bot half");
 
 var comp = app.project.activeItem;
 var layers = comp.selectedLayers.length;

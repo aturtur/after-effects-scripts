@@ -1,4 +1,5 @@
-app.beginUndoGroup("Move anchor point");
+app.beginUndoGroup("move anchor point");
+
 var n = 1; // target
 var comp = app.project.activeItem;
 var currentTime = app.project.activeItem.time;
@@ -11,7 +12,7 @@ for (var i = 0; i < comp.selectedLayers.length; i++) {
     var oldParent = layer.parent;
     layer.parent = duplicateLayer;
 
-    // get data
+    // get the data
     var boxWidth = (layer.sourceRectAtTime(currentTime, false).width);
     var boxHeight = (layer.sourceRectAtTime(currentTime, false).height);
     var cAnchorX = layer.anchorPoint.value[0];
@@ -82,7 +83,10 @@ for (var i = 0; i < comp.selectedLayers.length; i++) {
     layer.anchorPoint.setValue([x, y]);
     layer.position.setValue([cPosX+moveX, cPosY+moveY, cPosZ]);
 
+    // remove duplicate
     duplicateLayer.remove();
+
+    // put old parent back
     layer.parent = oldParent;
 }
 app.endUndoGroup();

@@ -1,4 +1,4 @@
-app.beginUndoGroup("Parent selected top half");
+app.beginUndoGroup("parent selected top half");
 
 var comp = app.project.activeItem;
 var layers = comp.selectedLayers.length;

@@ -1,4 +1,4 @@
-app.beginUndoGroup("Parent above");
+app.beginUndoGroup("parent above");
 
 var comp = app.project.activeItem;
 for (var i = 0; i < comp.selectedLayers.length; i++){

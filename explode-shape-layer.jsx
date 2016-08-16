@@ -1,4 +1,4 @@
-app.beginUndoGroup("Explode shape layer");
+app.beginUndoGroup("explode shape layer");
 
 var comp = app.project.activeItem;
 var layer = comp.selectedLayers[0];
@@ -10,6 +10,8 @@ for (var i = 1; i <= shapeContents.numProperties; i++) {
         layer.duplicate();
         theDuplicate = comp.layer(layer.index - 1);
         theDuplicate.name = theDuplicate.property("ADBE Root Vectors Group").property(i).name;
+        theDuplicate.label = layer.label;
+        theDuplicate.enables = true;
         x = 0;
         y = 0;
         d = 0;

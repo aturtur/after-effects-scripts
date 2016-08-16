@@ -1,4 +1,4 @@
-app.beginUndoGroup("Trim layers to Matte");
+app.beginUndoGroup("trim layers to Matte");
 
 var comp = app.project.activeItem;
 var layer = comp.selectedLayers;

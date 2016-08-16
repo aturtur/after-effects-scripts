@@ -1,4 +1,17 @@
-// layer shifter
+// basic variables
+var comp = app.project.activeItem;
+var fps = 1.0 / comp.frameDuration;
+var rnd;
+var original;
+var v;
+var min;
+var max;
+var diff;
+var calc;
+var base;
+var s;
+
+// ui resource string
 var resourceString = "group{orientation:'column',\
     panel: Panel{text:'Options',\
         rndGroup: Group{orientation:'row',\
@@ -15,6 +28,7 @@ var resourceString = "group{orientation:'column',\
     },\
 }";
 
+// ui function
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
     if (pal == null) return pal;    
@@ -30,19 +44,8 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
+// create ui
 var UI = createUserInterface(this, resourceString,"Shift layers");
-
-var comp = app.project.activeItem;
-var fps = 1.0 / comp.frameDuration;
-var rnd;
-var original;
-var v;
-var min;
-var max;
-var diff;
-var calc;
-var base;
-var s;
 
 // button random
 UI.panel.rndGroup.rndButton.onClick = function() {
@@ -72,7 +75,7 @@ UI.panel.sortGroup.sortButton.onClick = function() {
     app.beginUndoGroup("desc");
 
     for (var i = 0; i < s.length; i++) {
-        // calculating base ----------------------
+        // calculating base
         if (s[0].startTime != s[0].inPoint) {
             bdif = s[0].inPoint-s[0].startTime;
             original = s[0].startTime;
@@ -80,13 +83,13 @@ UI.panel.sortGroup.sortButton.onClick = function() {
         } else if (s[0].startTime == s[0].inPoint) {
             base = s[0].startTime;
         }
-        // GET RIGHT SPOT ------------------------
+        // right spot
         if(s[i].startTime != s[i].inPoint) {
             diff = s[i].inPoint - s[i].startTime;
         } else if (s[i].startTime == s[i].inPoint) {
             diff = 0;
         }
-        // move layers ---------------------------
+        // move layers
         if (i != 0) {
             s[i].startTime = (base-diff)+((v*i)/fps);
         }   

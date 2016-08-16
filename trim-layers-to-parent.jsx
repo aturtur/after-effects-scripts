@@ -1,4 +1,4 @@
-app.beginUndoGroup("Trim layers to Parent");
+app.beginUndoGroup("trim layers to Parent");
 
 var comp = app.project.activeItem;
 var layer = comp.selectedLayers;
