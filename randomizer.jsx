@@ -1,17 +1,6 @@
 // basic variables
-var comp;
-var selection;
-var time;
-
-var position;
-var scale;
-var rotation;
-var opacity;
-
-var xBox;
-var yBox;
-
-var xMin, xMax, yMin, yMax, sMin, sMax, rMin, rMax, oMin, oMax, xRnd, yRnd, sRnd, rRnd, oRnd;
+var comp, selection, time, xBox, yBox, xMin, xMax, yMin, yMax, sMin;
+var sMax, rMin, rMax, oMin, oMax, xRnd, yRnd, sRnd, rRnd, oRnd;
 
 // ui resource string
 var resourceString =
