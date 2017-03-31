@@ -1,5 +1,8 @@
+// this script is not stable
 var interval;
-
+var comp, frameRate, method, n, twod, threed, keysCount, layer, prop;
+var firstKey, lastKey, layerIn, layerOut, workAreaIn, workAreaOut;
+var kv, kite, kote, kiit, koit, ktab, ktc, kist, kost, ksab, ksc;
 // ui resource string
 var resourceString = "group{orientation:'column',\
     panel: Panel{text:'Options',\
@@ -21,7 +24,6 @@ var resourceString = "group{orientation:'column',\
         },\
     },\
     okButton: Button{text:'Distribute', size:[145,30]}\}";
-
 // ui function
 function createUserInterface (thisObj, userInterfaceString, scriptName){
     var pal = (thisObj instanceof Panel) ? thisObj : new Window("palette", scriptName, undefined, {resizeable: true});
@@ -37,10 +39,8 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     }
     return UI;
 };
-
 // create ui
 var UI = createUserInterface(this, resourceString,"Distribute keyframes");
-
 // when dropdownlist is changed
 UI.panel.engineGroup.engine.onChange = function() {
     if (UI.panel.engineGroup.engine.selection != 0) {
@@ -51,42 +51,21 @@ UI.panel.engineGroup.engine.onChange = function() {
         interval = UI.panel.intervalGroup.intervalText.text;
     }
 }
-
 // when button is clicked
 UI.okButton.onClick = function() {
     // basic variables
-    var comp = app.project.activeItem;
-    var frameRate = 1 / comp.frameDuration;
-    var workAreaIn = comp.workAreaStart;
-    var workAreaOut = workAreaIn + comp.workAreaDuration;
-    var method;
-    var n;    
-    var twod = PropertyValueType.TwoD_SPATIAL;
-    var threed = PropertyValueType.ThreeD_SPATIAL;
-    var keysCount;
-    var layer = comp.selectedLayers[0];
-    var prop = layer.selectedProperties;
-    var firstKey;
-    var lastKey;
-    var layerIn = layer.inPoint;
-    var layerOut = layer.outPoint;
-
+    comp = app.project.activeItem;
+    frameRate = 1 / comp.frameDuration;
+    workAreaIn = comp.workAreaStart;
+    workAreaOut = workAreaIn + comp.workAreaDuration;
+    twod = PropertyValueType.TwoD_SPATIAL;
+    threed = PropertyValueType.ThreeD_SPATIAL;
+    layer = comp.selectedLayers[0];
+    prop = layer.selectedProperties;
+    layerIn = layer.inPoint;
+    layerOut = layer.outPoint;
     interval = UI.panel.intervalGroup.intervalText.text;
-
-    // sweet list of arrays
-    var kv      = [ ];
-    var kite    = [ ];
-    var kote    = [ ];
-    var kiit    = [ ];
-    var koit    = [ ];
-    var ktab    = [ ];
-    var ktc     = [ ];
-    var kist    = [ ];
-    var kost    = [ ];
-    var ksab    = [ ];
-    var ksc     = [ ];
-    
-    // choose the engine
+    // distribution method
     if (UI.panel.engineGroup.engine.selection == 0) {
         n = 1;
     } else if (UI.panel.engineGroup.engine.selection == 1) {
@@ -98,15 +77,24 @@ UI.okButton.onClick = function() {
     } else if (UI.panel.engineGroup.engine.selection == 4) {
         n = 5;
     }
-
     app.beginUndoGroup("distribute keyframes");
     // per property
     for (var i = 0; i < prop.length; i++) {
-       
         firstKey = prop[i].keyTime(1);
         lastKey = prop[i].keyTime(prop[i].numKeys);
         keysCount = prop[i].numKeys;
-        
+        // some arrays
+        kv   = [ ];
+        kite = [ ];
+        kote = [ ];
+        kiit = [ ];
+        koit = [ ];
+        ktab = [ ];
+        ktc  = [ ];
+        kist = [ ];
+        kost = [ ];
+        ksab = [ ];
+        ksc  = [ ];
         // store data
         for (var k = 1; k <= keysCount; k++) {
             kv[kv.length] = prop[i].keyValue(k);
@@ -124,15 +112,12 @@ UI.okButton.onClick = function() {
                 kost[kost.length] = prop[i].keyOutSpatialTangent(k);
             }
         }
-
         // remove old keyframes
         while (prop[i].numKeys) {
             prop[i].removeKey(1);  
         }
-
         // add new keyframes
         switch (n) {
-
             // distribute keyframes by manually given interval
             case 1:
                 for (var s = 1; s <= keysCount; s++){
@@ -149,8 +134,7 @@ UI.okButton.onClick = function() {
                     }
                 }
                 break;
-
-            // distribute keyframes based on existing keyframes (auto mode) 
+            // distribute keyframes based on existing keyframes (auto mode)
             case 2:
                 for (var s = 1; s <= keysCount; s++){
                     method = firstKey + (lastKey - firstKey) / (keysCount - 1) * (s-1);
@@ -166,7 +150,6 @@ UI.okButton.onClick = function() {
                     }
                 }
                 break;
-
             // distribute keyframes based on length of the layer
             case 3:
                 for (var s = 1; s <= keysCount; s++){
@@ -183,7 +166,6 @@ UI.okButton.onClick = function() {
                     }
                 }
                 break;
-
             // distribute keyframes based on length of the work area
             case 4:
                 for (var s = 1; s <= keysCount; s++){
@@ -200,7 +182,6 @@ UI.okButton.onClick = function() {
                     }
                 }
                 break;
-
             // distribute keyframes based on length of the comp
             case 5:
                 for (var s = 1; s <= keysCount; s++){
@@ -218,19 +199,6 @@ UI.okButton.onClick = function() {
                 }
                 break;
         }
-
-        // reset arrays
-        kv      = [ ];
-        kite    = [ ];
-        kote    = [ ];
-        kiit    = [ ];
-        koit    = [ ];
-        ktab    = [ ];
-        ktc     = [ ];
-        kist    = [ ];
-        kost    = [ ];
-        ksab    = [ ];
-        ksc     = [ ];
     }
     app.endUndoGroup(); 
 }
