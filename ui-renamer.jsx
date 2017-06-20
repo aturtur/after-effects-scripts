@@ -1,3 +1,7 @@
+// TODO: piilota add kenttä, jos replace metodi käytössä
+// TODO: case sensitive nappi
+
+
 var k = 0;
 var n = 0;
 

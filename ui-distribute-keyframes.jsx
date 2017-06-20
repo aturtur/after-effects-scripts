@@ -1,3 +1,6 @@
+// TODO: support selected keyframes
+// TODO: support multilayer selections
+
 // this script is not stable
 var interval;
 var comp, frameRate, method, n, twod, threed, keysCount, layer, prop;
