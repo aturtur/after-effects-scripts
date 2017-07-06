@@ -173,4 +173,5 @@ for (var j = 0; j < items.length; j++) {
         items[j].parentFolder = folder_missing;
     }
 }
+folder_oldfolders.remove();
 app.endUndoGroup();

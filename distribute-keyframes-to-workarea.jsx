@@ -1,4 +1,3 @@
-
 // basic variables
 var comp = app.project.activeItem;
 var frameRate = 1 / comp.frameDuration;
@@ -6,8 +5,12 @@ var twod = PropertyValueType.TwoD_SPATIAL;
 var threed = PropertyValueType.ThreeD_SPATIAL;
 var layer = comp.selectedLayers[0];
 var prop = layer.selectedProperties;
+var layerIn = layer.inPoint;
+var layerOut = layer.outPoint;
 var kv, kite, kote, kiit, koit, ktab, ktc, kist, kost, ksab, ksc;
-var firstKey, lastKey, keysCount, t, firstTime, lastTime;
+var firstKey, lastKey, keysCount, t;
+var workAreaIn = comp.workAreaStart;
+var workAreaOut = workAreaIn + comp.workAreaDuration;
 
 app.beginUndoGroup("distribute keyframes");
 for (var i = 0; i < prop[0].selectedKeys.length; i++) {
@@ -47,13 +50,12 @@ for (var i = 0; i < prop[0].selectedKeys.length; i++) {
     }
     // remove old keyframes
     for (var k = firstKey; k <= lastKey; k++) {
-        prop[0].removeKey(firstKey);
+        prop[i].removeKey(firstKey);
     }
     // add new keyframes
     t = 0;
     for (var s = firstKey; s <= lastKey; s++){
-        method = firstTime + (lastTime - firstTime) / (keysCount - 1) * (t);
-        //alert(prop[0].keyTime(prop[0].selectedKeys[0]));
+        method = workAreaIn + (workAreaOut - workAreaIn) / (keysCount - 1) * t;
         prop[0].setValueAtTime(method, kv[t]);
         prop[0].setTemporalEaseAtKey(s, kite[t], kote[t]);
         prop[0].setInterpolationTypeAtKey(s, kiit[t], koit[t]);

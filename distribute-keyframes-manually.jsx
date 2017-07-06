@@ -1,4 +1,3 @@
-
 // basic variables
 var comp = app.project.activeItem;
 var frameRate = 1 / comp.frameDuration;
@@ -10,6 +9,7 @@ var kv, kite, kote, kiit, koit, ktab, ktc, kist, kost, ksab, ksc;
 var firstKey, lastKey, keysCount, t, firstTime, lastTime;
 
 app.beginUndoGroup("distribute keyframes");
+var interval = prompt("Frames");
 for (var i = 0; i < prop[0].selectedKeys.length; i++) {
     keysCount = prop[0].selectedKeys.length;
     firstKey = prop[0].selectedKeys[0];
@@ -47,13 +47,12 @@ for (var i = 0; i < prop[0].selectedKeys.length; i++) {
     }
     // remove old keyframes
     for (var k = firstKey; k <= lastKey; k++) {
-        prop[0].removeKey(firstKey);
+        prop[i].removeKey(firstKey);
     }
     // add new keyframes
     t = 0;
     for (var s = firstKey; s <= lastKey; s++){
-        method = firstTime + (lastTime - firstTime) / (keysCount - 1) * (t);
-        //alert(prop[0].keyTime(prop[0].selectedKeys[0]));
+        method = firstTime + (interval/frameRate) * t;
         prop[0].setValueAtTime(method, kv[t]);
         prop[0].setTemporalEaseAtKey(s, kite[t], kote[t]);
         prop[0].setInterpolationTypeAtKey(s, kiit[t], koit[t]);

@@ -1,7 +1,5 @@
 // TODO: piilota add kenttä, jos replace metodi käytössä
 // TODO: case sensitive nappi
-
-
 var k = 0;
 var n = 0;
 
@@ -33,12 +31,8 @@ var resourceString = "group{orientation:'column',\
             searchText: EditText{text:'',justify:'left', characters:8}\
         },\
         replaceGroup: Group{orientation:'row',\
-            replaceLabel: StaticText{text:'Replace'},\
+            replaceLabel: StaticText{text:'Input'},\
             replaceText: EditText{text:'',justify:'left', characters:8}\
-        },\
-        addGroup: Group{orientation:'row',\
-            addLabel: StaticText{text:'Add'},\
-            addText: EditText{text:'',justify:'left', characters:8}\
         },\
     },\
     okButton: Button{text:'Do It', size:[145,30]}\}";
@@ -59,7 +53,7 @@ function createUserInterface (thisObj, userInterfaceString, scriptName){
     return UI;
 };
 
-// create ui
+// create ui and set default settings
 var UI = createUserInterface(this, resourceString,"Renamer");
 
 // when dropdownlist is changed
@@ -77,24 +71,38 @@ UI.panel.selGroup.sel.onChange = function() {
     }
 }
 
+
 // when dropdownlist is changed
 UI.panel.metGroup.met.onChange = function() {
     if (UI.panel.metGroup.met.selection == 0) {
         n = 0;
     } else if (UI.panel.metGroup.met.selection == 1) {
         n = 1;
-    } else if (UI.panel.metGroup.met.selection == 2) {
         n = 2;
     }
 }
+
+
+/*
+// when dropdownlist is changed
+UI.panel.engineGroup.engine.onChange = function() {
+    if (UI.panel.engineGroup.engine.selection != 0) {
+        UI.panel.intervalGroup.intervalText.enabled = false;
+        interval = 0;
+    } else {
+        UI.panel.intervalGroup.intervalText.enabled = true;
+        interval = UI.panel.intervalGroup.intervalText.text;
+    }
+}
+*/
 
 // when button is clicked
 UI.okButton.onClick = function() {
     app.beginUndoGroup("renamer");
 
     var search = UI.panel.searchGroup.searchText.text;
-    var replace = UI.panel.replaceGroup.replaceText.text;
-    var add = UI.panel.addGroup.addText.text;
+    var userinput = UI.panel.replaceGroup.replaceText.text;
+    //var add = UI.panel.addGroup.addText.text;
     var items = new Array();
     var res; var src;
 
@@ -104,13 +112,13 @@ UI.okButton.onClick = function() {
                 src = app.project.activeItem.layers[i].name;
                 switch(n) {
                     case 0: // search and replace
-                        res = src.replace(search,replace);
+                        res = src.replace(search,userinput);
                         break;
                     case 1: // add prefix
-                        res = add+src;
+                        res = userinput+src;
                         break;
                     case 2: // add suffix
-                        res = src+add;
+                        res = src+userinput;
                         break;
                 }
                 app.project.activeItem.layers[i].name = res;
@@ -121,13 +129,13 @@ UI.okButton.onClick = function() {
                 src = app.project.activeItem.selectedLayers[i].name;
                 switch(n) {
                     case 0: // search and replace
-                        res = src.replace(search,replace);
+                        res = src.replace(search,userinput);
                         break;
                     case 1: // add prefix
-                        res = add+src;
+                        res = userinput+src;
                         break;
                     case 2: // add suffix
-                        res = src+add;
+                        res = src+userinput;
                         break;
                 }
                 app.project.activeItem.selectedLayers[i].name = res;
@@ -141,13 +149,13 @@ UI.okButton.onClick = function() {
                 src = items[j].name;
                 switch(n) {
                     case 0: // search and replace
-                        res = src.replace(search,replace);
+                        res = src.replace(search,userinput);
                         break;
                     case 1: // add prefix
-                        res = add+src;
+                        res = userinput+src;
                         break;
                     case 2: // add suffix
-                        res = src+add;
+                        res = src+userinput;
                         break;
                 }
                 items[j].name = res;
@@ -161,13 +169,13 @@ UI.okButton.onClick = function() {
                 src = items[j].name;
                 switch(n) {
                     case 0: // search and replace
-                        res = src.replace(search,replace);
+                        res = src.replace(search,userinput);
                         break;
                     case 1: // add prefix
-                        res = add+src;
+                        res = userinput+src;
                         break;
                     case 2: // add suffix
-                        res = src+add;
+                        res = src+userinput;
                         break;
                 }
                 items[j].name = res;
@@ -179,13 +187,13 @@ UI.okButton.onClick = function() {
                     src = props[i].name;
                     switch(n) {
                         case 0: // search and replace
-                            res = src.replace(search,replace);
+                            res = src.replace(search,userinput);
                             break;
                         case 1: // add prefix
-                            res = add+src;
+                            res = userinput+src;
                             break;
                         case 2: // add suffix
-                            res = src+add;
+                            res = src+userinput;
                             break;
                     }
                     props[i].name = res;
