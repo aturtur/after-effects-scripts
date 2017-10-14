@@ -23,6 +23,7 @@ if (targetFolder) {
                         var f = parseInt(times[2]);
 
                         theNull.position.setValueAtTime(f/frameRate , [x*comp.width, comp.height-(y*comp.width)]);
+                        files[i].close();
                     }
                 } catch (error) {}
             }
