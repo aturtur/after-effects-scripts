@@ -1,3 +1,4 @@
+
 app.beginUndoGroup("import-fusion-polygon-point-data");
 var comp = app.project.activeItem;
 var frameRate = 1 / comp.frameDuration; 
@@ -23,10 +24,11 @@ if (targetFolder) {
                         var f = parseInt(times[2]);
 
                         theNull.position.setValueAtTime(f/frameRate , [x*comp.width, comp.height-(y*comp.width)]);
-                        files[i].close();
+
                     }
                 } catch (error) {}
             }
+        files[i].close();
       }
 }
 app.endUndoGroup();
