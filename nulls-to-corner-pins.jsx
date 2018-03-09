@@ -1,13 +1,11 @@
-app.beginUndoGroup("nulls-to-corner-pins");
+app.beginUndoGroup("nulls to corner pins");
 var comp = app.project.activeItem;
 var layers = comp.selectedLayers.length;
 var names = [];
-
 for (var i = 0; i < layers; i++) {
         names.push(comp.selectedLayers[i].name);
         comp.selectedLayers[i].enabled = false;
 }
-
 var solid = comp.layers.addSolid([0,0,0], "Corners", comp.width,  comp.height, 1);
 solid.Effects.addProperty("CC Power Pin");
 comp.layer(1).property("ADBE Effect Parade").property(1).property("Top Left").expression = "L = thisComp.layer(\""+names[0]+"\");\nL.toWorld(L.anchorPoint)";

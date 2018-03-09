@@ -1,7 +1,7 @@
 // variables
 var items = new Array();
 var filename;
-var fileformat
+var fileformat;
 var make_comps = 0;
 var make_videos = 0;
 var make_images = 0;
@@ -29,6 +29,7 @@ for (var j = 0; j < items.length; j++) {
     if (items[j].file) {
         filename = items[j].file.name;
         fileformat = filename.substring(filename.lastIndexOf("."));
+        fileformat = fileformat.toLowerCase();
 
         // if audio format found
         for (var k = 0; k < audios.length; k++) {
@@ -107,11 +108,13 @@ if (make_3d) {
     var folder_3d = app.project.items.addFolder("3D Files");
     folder_3d.label = 0;
 }
+
 // sort items to new folders
 for (var j = 0; j < items.length; j++) {
     if (items[j].file) {
         filename = items[j].file.name;
         fileformat = filename.substring(filename.lastIndexOf("."));
+        fileformat = fileformat.toLowerCase();
 
         // if audio format found
         for (var k = 0; k < audios.length; k++) {
