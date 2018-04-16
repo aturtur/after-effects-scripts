@@ -7,9 +7,12 @@ var make_videos = 0;
 var make_images = 0;
 var make_audio = 0;
 var make_missing = 0;
+var make_solids = 0;
 var make_vectors = 0;
 var make_oldfolders = 0;
 var make_3d = 0;
+var thereIsSolidsFolder = 0;
+var old_solids_folder;
 
 // file formats
 var audios = ['.aac','.m4a','.aif','.aiff','.mp3','.wav','.wma','.mpa'];
@@ -69,6 +72,16 @@ for (var j = 0; j < items.length; j++) {
     // folders
     if (items[j] instanceof FolderItem) {
         make_oldfolders = 1;
+        if (items[j].name == "Solids") {
+            thereIsSolidsFolder = 1;
+            old_solids_folder = items[j];
+        }
+    }
+    // solids
+    if (items[j].mainSource instanceof SolidSource) {
+        if (thereIsSolidsFolder == 0){
+            make_solids = 1;
+        }
     }
     // missing
     if (items[j].footageMissing == true) {
@@ -95,6 +108,10 @@ if (make_audio) {
 if (make_missing) {
     var folder_missing = app.project.items.addFolder("Missing");
     folder_missing.label = 0;
+}
+if (make_solids) {
+    var folder_solids = app.project.items.addFolder("Solids");
+    folder_solids.label = 0;
 }
 if (make_vectors) {
     var folder_vectors = app.project.items.addFolder("Vectors");
@@ -155,6 +172,14 @@ for (var j = 0; j < items.length; j++) {
     if (items[j] instanceof FolderItem) {
         if (items[j].name != "Solids") {        
             items[j].parentFolder = folder_oldfolders;
+        }
+    }
+    // solids
+    if (items[j].mainSource instanceof SolidSource) {
+        if (thereIsSolidsFolder == 1) {
+            items[j].parentFolder = old_solids_folder;    
+        } else {
+            items[j].parentFolder = folder_solids;
         }
     }
     // missing
