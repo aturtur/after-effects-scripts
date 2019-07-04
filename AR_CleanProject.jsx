@@ -85,4 +85,4 @@ function CleanProject() {
     if (make_oldfolders == 1) { folder_oldfolders.remove(); } // If there is old folder(s)
     app.endUndoGroup(); // End undo group
 }
-AddEdgeBlur(); // Run CleanProject function
+CleanProject(); // Run CleanProject function
