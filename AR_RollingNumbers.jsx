@@ -11,7 +11,7 @@ function RollingNumbers() {
     app.beginUndoGroup("AR_RollingNumbers"); // Begin undo group
     var comp = app.project.activeItem; // Get active composition
     var layers = comp.selectedLayers // Get selected layers
-    var digits = parseInt(prompt("How many digits? (Maximum is 6)", 4)); // User input: How many digits?
+    var digits = parseInt(prompt("How many digits?", 4)); // User input: How many digits?
     textLayerCount = digits; // Count of digits
     var layerArray = []; // Init an array for storing layers
     for (var i = 0; i < textLayerCount; i++) { // Iterate through digits
@@ -21,7 +21,19 @@ function RollingNumbers() {
     var controller = comp.layers.addNull(0); // Add a controller null
     var name = "Rolling Number Controller"; // Give a name
     controller.name = name; // Set null's name
-    controller.Effects.addProperty("ADBE Slider Control"); // Add a Slider Control effect
+    
+    if (digits <= 6) {
+        var rollingNumberEffect = controller.Effects.addProperty("ADBE Slider Control"); // Add a Slider Control effect
+        rollingNumberEffect.name = "Rolling Numbers"; // Set effect's name
+        var type = "Slider";
+        var format = ".value";
+    } else if (digits >= 7) {
+        var rollingNumberEffect = controller.Effects.addProperty("ADBE Point Control"); // Add a Point Control effect
+        rollingNumberEffect.name = "Rolling Numbers"; // Set effect's name
+        var type = "Point";
+        var format = "[0]";
+    }
+    
     var leadingZeros = controller.Effects.addProperty("ADBE Checkbox Control") // Add a Checkbox Control effect
     leadingZeros.name = "Leading Zeros"; // Set name for the Checkbox Control    
     var iterator_a = 0; // Init iterator a varaible
@@ -30,7 +42,7 @@ function RollingNumbers() {
         layerArray[i].property("ADBE Transform Group").property("ADBE Position").setValue([layerArray[i].property("ADBE Transform Group").property("ADBE Position").value[0]+(50*i),
                                                                                                                           layerArray[i].property("ADBE Transform Group").property("ADBE Position").value[1]]);
         if (i == 0) { // If first iteration
-            layerArray[i].property("ADBE Text Properties").property("ADBE Text Document").expression = "v = Math.round(thisComp.layer(\""+name+"\").effect(\"Slider Control\")(\"Slider\").value).toString();\n"+
+            layerArray[i].property("ADBE Text Properties").property("ADBE Text Document").expression = "v = Math.round(thisComp.layer(\""+name+"\").effect(\"Rolling Numbers\")(\""+type+"\")"+format+").toString();\n"+
                                                                                                         "len = v.length;\n"+
                                                                                                         "lz = thisComp.layer(\""+name+"\").effect(\"Leading Zeros\")(\"Checkbox\").value;\n"+
                                                                                                         "if (lz == true) {s = \"0\"} else {s = \"\"};\n"+
@@ -49,7 +61,7 @@ function RollingNumbers() {
                 iterator_b++;
             }            
             var sub = (layerArray.length - i);
-            layerArray[i].property("ADBE Text Properties").property("ADBE Text Document").expression = "v = Math.round(thisComp.layer(\""+name+"\").effect(\"Slider Control\")(\"Slider\").value).toString();\n"+
+            layerArray[i].property("ADBE Text Properties").property("ADBE Text Document").expression = "v = Math.round(thisComp.layer(\""+name+"\").effect(\"Rolling Numbers\")(\""+type+"\")"+format+").toString();\n"+
                                                                                                         "len = v.length;\n"+
                                                                                                         "lz = thisComp.layer(\""+name+"\").effect(\"Leading Zeros\")(\"Checkbox\").value;\n"+
                                                                                                         "if (lz == true) {s = \"0\"} else {s = \"\"};\n"+
@@ -65,3 +77,7 @@ function RollingNumbers() {
 }
 
 RollingNumbers(); // Run the script
+
+
+// 
+// effect("Point Control")("Point")[0]
