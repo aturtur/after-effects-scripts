@@ -6,9 +6,18 @@ Website: http://aturtur.com/
 Name-US: AR_ImportSRT
 Description-US: Imports subtitles (SRT) file and creates text layers.
 Written for Adobe After Effects CC 2019 (Version 16.0.1 Build 48)
+
 */
 //@target aftereffects
-function frame(timeInString) {
+function TimeToFrames(time, comp) {
+    var frames = time * (1.0 / comp.frameDuration);
+    return frames;
+}
+function FramesToTime(frames, comp) {
+    var time = frames / (1.0 / comp.frameDuration);
+    return time;
+}
+function Time(timeInString) {
     var t = timeInString.split(":");
     var s = parseInt(t)*3600+parseInt(t[1])*60+parseFloat(t[2].replace(",","."));
     return s;
@@ -29,15 +38,25 @@ function ImportSRT() {
                 }
                     line = srt.readln();
                 var times = line.split("-->"); // Get timecode
-                var f = frame(times[0]); // Get in time
-                var l = frame(times[1]); // Get out time
+                var f = Time(times[0]); // Get in time
+                var l = Time(times[1]); // Get out time
                 var text = ""; // Initialize text string
                 while ((line = srt.readln()) != "") { // Handle text
                     text += line.replace(/<(.*?)>/g, "")+"\r\n";
                 }
                 sourceText.setValue(text); // Set text
-                layer.inPoint = f; // Set layer in point
-                layer.outPoint = l; // Set layer out point
+
+                var inFrame = TimeToFrames(f, comp);
+                var outFrame = TimeToFrames(l, comp);
+                var roundedInFrame = Math.round(inFrame);
+                var roundedOutFrame = Math.round(outFrame);
+                var inTime = FramesToTime(roundedInFrame, comp);
+                var outTime = FramesToTime(roundedOutFrame, comp);
+
+                //alert(inTime+" "+outTime);
+
+                layer.inPoint = inTime; // Set layer in point
+                layer.outPoint = outTime; // Set layer out point
             }
             srt.close(); // Close file
         }
